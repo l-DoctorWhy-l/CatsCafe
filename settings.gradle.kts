@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -19,5 +20,24 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "My Application"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "cats-cafe"
+
 include(":app")
+
+// common
+include(":common:common-ui")
+include(":common:common-utils")
+
+// core
+include(":core:core-network:core-network-api")
+include(":core:core-network:core-network-impl")
+include(":core:core-database:core-database-api")
+include(":core:core-database:core-database-impl")
+include(":core:core-navigation:core-navigation-api")
+include(":core:core-navigation:core-navigation-impl")
+
+// feature
+// Шаблон: include(":feature:<screen>:<screen>-api")
+//         include(":feature:<screen>:<screen>-impl")

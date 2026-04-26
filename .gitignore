@@ -1,15 +1,66 @@
-*.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+# =========================
+# Gradle / Build
+# =========================
+.gradle/
+build/
+**/build/
+!**/src/**/build/
+captures/
+.kotlin/
+
+# Файлы локальной среды Gradle
 local.properties
+
+# =========================
+# Android
+# =========================
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# Native
+.externalNativeBuild/
+.cxx/
+
+# Профайлинг / отчёты
+*.hprof
+hs_err_pid*
+
+# =========================
+# IntelliJ / Android Studio
+# =========================
+*.iml
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/jarRepositories.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/deploymentTargetSelector.xml
+.idea/deploymentTargetDropDown.xml
+.idea/shelf/
+.idea/.name
+
+# =========================
+# VS Code / Cursor
+# =========================
+.vscode/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# =========================
+# Logs
+# =========================
+*.log
