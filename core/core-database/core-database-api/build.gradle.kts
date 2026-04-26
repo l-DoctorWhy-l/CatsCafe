@@ -11,4 +11,5 @@ dependencies {
 
     api(libs.androidx.room.runtime)
     api(libs.androidx.room.ktx)
+    api(libs.kotlinx.datetime)
 }

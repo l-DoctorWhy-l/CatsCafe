@@ -16,9 +16,13 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://api.catscafe.example/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            buildConfigField("String", "BASE_URL", "\"https://api.catscafe.example/\"")
         }
     }
 
@@ -38,6 +42,17 @@ dependencies {
     implementation(projects.core.coreDatabase.coreDatabaseImpl)
     implementation(projects.core.coreNavigation.coreNavigationApi)
     implementation(projects.core.coreNavigation.coreNavigationImpl)
+
+    // feature -impl модули — подключаются только в :app (для регистрации в Koin/NavHost)
+    implementation(projects.feature.splash.splashImpl)
+    implementation(projects.feature.auth.authImpl)
+    implementation(projects.feature.home.homeImpl)
+    implementation(projects.feature.catalog.catalogImpl)
+    implementation(projects.feature.booking.bookingImpl)
+    implementation(projects.feature.profile.profileImpl)
+    implementation(projects.feature.catDetails.catDetailsImpl)
+    // feature -api модули, на которые навигирует :app (стартовый маршрут)
+    implementation(projects.feature.splash.splashApi)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

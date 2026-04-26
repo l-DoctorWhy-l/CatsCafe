@@ -92,17 +92,35 @@ flowchart TD
 
 ### 4.1 core-network
 
-- **api**: интерфейсы `HttpClientProvider` / `RetrofitProvider`, общие модели ответа (`ApiResult<T>`, `ApiError`), конфиг `NetworkConfig` (baseUrl, таймауты), `Json` (kotlinx-serialization) как singleton.
-- **impl**: Retrofit + OkHttp + `Json.asConverterFactory(...)`, интерсепторы (логирование, авторизация — позже), Koin-модуль.
+- **api**: `sealed interface ApiResult<out T>` (`Success` + `Failure.{Http, Network, Timeout, Serialization, Unknown}`), обёртка `suspend inline fun <T> apiCall(block: suspend () -> T): ApiResult<T>` (ловит исключения Retrofit/OkHttp/kotlinx-serialization). Транзитивно отдаёт `retrofit2`, `kotlinx-serialization-json` и `okhttp3` как `api`-зависимости — поэтому `feature-X-impl` может объявлять свои Retrofit-сервисы и `@Serializable` DTO без явного добавления этих библиотек.
+- **impl**: `NetworkConfig` (baseUrl, isDebug, таймауты), `OkHttpClient` (с `HttpLoggingInterceptor` BODY только в debug), корневой `Retrofit` с `Json.asConverterFactory("application/json")`, единый `Json` (`ignoreUnknownKeys`, `coerceInputValues`, `explicitNulls = false`), Koin-модуль `coreNetworkModule(config: NetworkConfig)`.
 
-Feature-impl, которому нужна сеть, забирает `Retrofit` из `core-network-api` и определяет свои Retrofit-сервисы локально.
+`baseUrl` приходит из `BuildConfig.BASE_URL` (`buildConfigField` в `:app/build.gradle.kts`, отдельные значения для debug/release). `:app` собирает `NetworkConfig(BuildConfig.BASE_URL, BuildConfig.DEBUG)` и передаёт в `coreNetworkModule(...)` при `startKoin`.
+
+Feature-impl/data:
+1. Объявляет свой `interface CatApi { @GET("cats") suspend fun ... }` и `@Serializable data class CatDto`.
+2. В Koin-модуле фичи: `single { get<Retrofit>().create(CatApi::class.java) }`.
+3. В репозитории: `apiCall { api.getCats().map(CatDto::toDomain) }` — получает `ApiResult<List<Cat>>`, маппит в свой domain-`Result` или sealed.
+
+Auth-инфраструктура (Bearer-токен) появится вместе с `:feature:auth:*` — добавим `AuthTokenProvider` в `core-network-api` и `AuthInterceptor` в `core-network-impl` без правок остальных фич.
 
 ### 4.2 core-database
 
-- **api**: интерфейс `DatabaseProvider` (отдаёт собранный `RoomDatabase` или фабрики DAO), общие конвертеры (`Instant` и т.п.).
-- **impl**: `RoomDatabase` приложения, миграции, билдер, Koin-модуль.
+Одна общая `CatsCafeDatabase` для всего приложения (single-DB подход).
 
-На старте — одна общая БД в `core-database-impl`. Альтернатива (БД на feature) — обсуждается отдельно.
+- **api**: публичные `@Entity`-классы и `@Dao`-интерфейсы. Зависит на `room-runtime` и `kotlinx-datetime` (типы публичных полей `Instant`/`LocalDate`). Не зависит на `room-compiler`. `feature-X-impl`-data импортирует здесь нужные DAO/Entity и работает с ними как с обычными интерфейсами.
+- **impl**: `CatsCafeDatabase : RoomDatabase` со списком всех `entities`, `@TypeConverters(CatsCafeTypeConverters::class)`, миграции, `DatabaseConfig` (имя файла, версия), Koin-модуль `coreDatabaseModule`. Здесь же KSP подключает `room-compiler` и генерит реализации DAO. Каждый DAO выставляется в Koin как `single { get<CatsCafeDatabase>().xxxDao() }`.
+
+Принципиальные правила:
+
+- `feature-X-api` **не** зависит от `core-database-api` и **не** видит ни `Entity`, ни `Dao`. Domain-модели/use-cases работают с domain-типами, маппинг `Entity ↔ domain` живёт в `feature-X-impl`-data.
+- Появление новой `Entity` требует:
+  1. Добавить `@Entity` и `@Dao` в `core-database-api`.
+  2. Включить класс в `entities = [...]` у `@Database`.
+  3. Поднять `DatabaseConfig.VERSION` и добавить `Migration`.
+  4. Зарегистрировать DAO в `coreDatabaseModule`.
+
+TypeConverters: `Instant` (epoch millis), `LocalDate`/`LocalDateTime` (ISO-строки), `UUID` (строка) — лежат в `core-database-impl/converters/CatsCafeTypeConverters.kt`.
 
 ### 4.3 core-navigation
 
@@ -179,11 +197,26 @@ single<ScreenProvider> { CatDetailsScreenProviderImpl(get()) }
 - Правила зависимостей и api/impl-границы (`.cursor/rules/`).
 - Папка `feature/` с `README.md` — шаблон создания новой фичи.
 
+**Текущий список фичей (скелеты созданы):**
+
+| Фича | Маршрут | Кто навигирует |
+|------|---------|----------------|
+| `feature/splash` | `SplashRoute` | стартовый экран в `:app` |
+| `feature/auth` | `AuthRoute` | splash, profile (logout) |
+| `feature/home` | `HomeRoute` | splash/auth, таб |
+| `feature/catalog` | `CatalogRoute` | таб |
+| `feature/booking` | `BookingRoute(preselectedCatId)` | таб, cat-details |
+| `feature/profile` | `ProfileRoute` | таб |
+| `feature/cat-details` | `CatDetailsRoute(catId)` | catalog |
+
+Все 14 модулей (7 api + 7 impl) подключены в `settings.gradle.kts`. Каждая фича пока содержит только `Route` (api) и `ScreenProvider`+`Screen`-заглушку+`featureXModule` (impl). MVVM (`ViewModel`/`UiState`/`UiEvent`) добавляется при появлении логики — шаблон в `feature-impl.mdc`.
+
 **К ближайшим шагам:**
-- Реальные контракты в `core-navigation-api` (`ScreenProvider`, `AppNavigator`), `core-network-api` (`HttpClientProvider`, `NetworkConfig`, `ApiResult`), `core-database-api` (`DatabaseProvider`).
-- Koin-модули в `core-*-impl` + `Application` класс в `:app` со `startKoin { ... }`.
+- Bottom navigation для `Home`/`Catalog`/`Booking`/`Profile` (Scaffold с `BottomBar`, переключение через `popUpTo` + `saveState`/`restoreState`).
+- Логика Splash → `Home`/`Auth`.
+- Первая сущность в `core-database-api` → активация `CatsCafeDatabase`.
 
 **Позже:**
-- Конкретные feature-модули по мере необходимости.
+- `AuthTokenProvider` + `AuthInterceptor` вместе с `:feature:auth:*`.
 - Стратегия многомодульного тестирования.
 - Аналитика, фича-флаги, error reporting — как отдельные `core-*`.

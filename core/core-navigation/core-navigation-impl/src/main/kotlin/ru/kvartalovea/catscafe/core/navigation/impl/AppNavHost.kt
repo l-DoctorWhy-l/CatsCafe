@@ -25,7 +25,8 @@ fun AppNavHost(
 ) {
     val navController = rememberNavController()
     val navigator = koinInject<AppNavigator>()
-    val screenProviders = remember { getKoin().getAll<ScreenProvider>() }
+    val koin = getKoin()
+    val screenProviders = remember(koin) { koin.getAll<ScreenProvider>() }
 
     DisposableEffect(navController, navigator) {
         if (navigator is AppNavigatorImpl) {

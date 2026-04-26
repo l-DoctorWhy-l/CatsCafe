@@ -10,7 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import ru.kvartalovea.catscafe.common.ui.theme.CatsCafeTheme
 import ru.kvartalovea.catscafe.core.navigation.impl.AppNavHost
-import ru.kvartalovea.catscafe.navigation.HomeRoute
+import ru.kvartalovea.catscafe.feature.splash.api.SplashRoute
 
 class MainActivity : ComponentActivity() {
 
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
             CatsCafeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     AppNavHost(
-                        startDestination = HomeRoute,
+                        startDestination = SplashRoute,
                         modifier = Modifier.padding(innerPadding),
                     )
                 }
