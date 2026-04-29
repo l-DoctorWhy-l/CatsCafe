@@ -37,6 +37,8 @@ include(":core:core-database:core-database-api")
 include(":core:core-database:core-database-impl")
 include(":core:core-navigation:core-navigation-api")
 include(":core:core-navigation:core-navigation-impl")
+include(":core:core-account:core-account-api")
+include(":core:core-account:core-account-impl")
 
 // feature
 include(":feature:splash:splash-api")

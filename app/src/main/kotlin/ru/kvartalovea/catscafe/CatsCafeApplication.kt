@@ -5,6 +5,7 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
+import ru.kvartalovea.catscafe.core.account.impl.coreAccountModule
 import ru.kvartalovea.catscafe.core.database.impl.coreDatabaseModule
 import ru.kvartalovea.catscafe.core.navigation.impl.coreNavigationModule
 import ru.kvartalovea.catscafe.core.network.impl.NetworkConfig
@@ -33,6 +34,7 @@ class CatsCafeApplication : Application() {
                 ),
                 coreDatabaseModule,
                 coreNavigationModule,
+                coreAccountModule,
                 featureSplashModule,
                 featureAuthModule,
                 featureHomeModule,

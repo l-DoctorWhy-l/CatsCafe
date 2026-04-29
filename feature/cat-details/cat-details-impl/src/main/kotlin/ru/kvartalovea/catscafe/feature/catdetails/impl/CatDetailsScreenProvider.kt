@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import ru.kvartalovea.catscafe.core.navigation.api.ScreenProvider
 import ru.kvartalovea.catscafe.feature.catdetails.api.CatDetailsRoute
-import ru.kvartalovea.catscafe.feature.catdetails.impl.presentation.CatDetailsScreen
+import ru.kvartalovea.catscafe.feature.catdetails.impl.presentation.screen.CatDetailsScreen
 
 internal class CatDetailsScreenProvider : ScreenProvider {
 

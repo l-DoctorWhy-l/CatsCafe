@@ -9,16 +9,15 @@ android {
 
 dependencies {
     implementation(projects.feature.profile.profileApi)
-    implementation(projects.feature.auth.authApi)
 
     implementation(projects.common.commonUi)
     implementation(projects.common.commonUtils)
     implementation(projects.core.coreNavigation.coreNavigationApi)
-    implementation(projects.core.coreNetwork.coreNetworkApi)
-    implementation(projects.core.coreDatabase.coreDatabaseApi)
+    implementation(projects.core.coreAccount.coreAccountApi)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)

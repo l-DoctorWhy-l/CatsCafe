@@ -42,6 +42,8 @@ dependencies {
     implementation(projects.core.coreDatabase.coreDatabaseImpl)
     implementation(projects.core.coreNavigation.coreNavigationApi)
     implementation(projects.core.coreNavigation.coreNavigationImpl)
+    implementation(projects.core.coreAccount.coreAccountApi)
+    implementation(projects.core.coreAccount.coreAccountImpl)
 
     // feature -impl модули — подключаются только в :app (для регистрации в Koin/NavHost)
     implementation(projects.feature.splash.splashImpl)
@@ -51,8 +53,12 @@ dependencies {
     implementation(projects.feature.booking.bookingImpl)
     implementation(projects.feature.profile.profileImpl)
     implementation(projects.feature.catDetails.catDetailsImpl)
-    // feature -api модули, на которые навигирует :app (стартовый маршрут)
+    // feature -api модули: стартовый маршрут + маршруты нижней навигации
     implementation(projects.feature.splash.splashApi)
+    implementation(projects.feature.home.homeApi)
+    implementation(projects.feature.catalog.catalogApi)
+    implementation(projects.feature.booking.bookingApi)
+    implementation(projects.feature.profile.profileApi)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -62,6 +68,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
 
     implementation(platform(libs.koin.bom))

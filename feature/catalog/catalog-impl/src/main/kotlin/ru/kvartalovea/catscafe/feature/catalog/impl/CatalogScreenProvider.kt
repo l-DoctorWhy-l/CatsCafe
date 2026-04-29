@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import ru.kvartalovea.catscafe.core.navigation.api.ScreenProvider
 import ru.kvartalovea.catscafe.feature.catalog.api.CatalogRoute
-import ru.kvartalovea.catscafe.feature.catalog.impl.presentation.CatalogScreen
+import ru.kvartalovea.catscafe.feature.catalog.impl.presentation.screen.CatalogScreen
 
 internal class CatalogScreenProvider : ScreenProvider {
 
