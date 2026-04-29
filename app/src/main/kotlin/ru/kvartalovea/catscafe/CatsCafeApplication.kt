@@ -14,6 +14,8 @@ import ru.kvartalovea.catscafe.feature.auth.impl.featureAuthModule
 import ru.kvartalovea.catscafe.feature.booking.impl.featureBookingModule
 import ru.kvartalovea.catscafe.feature.catalog.impl.featureCatalogModule
 import ru.kvartalovea.catscafe.feature.catdetails.impl.featureCatDetailsModule
+import ru.kvartalovea.catscafe.feature.mybookings.impl.featureMyBookingsModule
+import ru.kvartalovea.catscafe.feature.donations.impl.featureDonationsModule
 import ru.kvartalovea.catscafe.feature.home.impl.featureHomeModule
 import ru.kvartalovea.catscafe.feature.profile.impl.featureProfileModule
 import ru.kvartalovea.catscafe.feature.splash.impl.featureSplashModule
@@ -42,6 +44,8 @@ class CatsCafeApplication : Application() {
                 featureBookingModule,
                 featureProfileModule,
                 featureCatDetailsModule,
+                featureMyBookingsModule,
+                featureDonationsModule,
             )
         }
     }

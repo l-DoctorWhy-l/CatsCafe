@@ -53,7 +53,8 @@ dependencies {
     implementation(projects.feature.booking.bookingImpl)
     implementation(projects.feature.profile.profileImpl)
     implementation(projects.feature.catDetails.catDetailsImpl)
-    // feature -api модули: стартовый маршрут + маршруты нижней навигации
+    implementation(projects.feature.myBookings.myBookingsImpl)
+    implementation(projects.feature.donations.donationsImpl)
     implementation(projects.feature.splash.splashApi)
     implementation(projects.feature.home.homeApi)
     implementation(projects.feature.catalog.catalogApi)

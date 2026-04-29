@@ -5,11 +5,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.kvartalovea.catscafe.core.account.api.AccountManager
+import ru.kvartalovea.catscafe.core.navigation.api.AppNavigator
+import ru.kvartalovea.catscafe.feature.donations.api.DonationsRoute
+import ru.kvartalovea.catscafe.feature.mybookings.api.MyBookingsRoute
 import ru.kvartalovea.catscafe.feature.profile.impl.presentation.model.ProfileUiEvent
 import ru.kvartalovea.catscafe.feature.profile.impl.presentation.model.ProfileUiState
 
 internal class ProfileViewModel(
     private val accountManager: AccountManager,
+    private val navigator: AppNavigator,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<ProfileUiState>(buildState())
@@ -17,8 +21,8 @@ internal class ProfileViewModel(
 
     fun onEvent(event: ProfileUiEvent) {
         when (event) {
-            ProfileUiEvent.OnMyBookingsClick -> Unit
-            ProfileUiEvent.OnDonationsHistoryClick -> Unit
+            ProfileUiEvent.OnMyBookingsClick -> navigator.navigate(MyBookingsRoute)
+            ProfileUiEvent.OnDonationsHistoryClick -> navigator.navigate(DonationsRoute)
             ProfileUiEvent.OnNotificationSettingsClick -> Unit
             ProfileUiEvent.OnLogoutClick -> Unit
         }
