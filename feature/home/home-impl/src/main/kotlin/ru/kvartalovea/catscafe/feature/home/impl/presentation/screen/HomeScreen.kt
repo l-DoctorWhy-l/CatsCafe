@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CloudOff
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.QrCode2
 import androidx.compose.material3.Card
@@ -119,6 +120,10 @@ private fun HomeContent(
                         .padding(paddingValues),
                     contentPadding = PaddingValues(bottom = 24.dp),
                 ) {
+                    if (state.isOffline) {
+                        item { OfflineBanner() }
+                    }
+
                     state.nearestBooking?.let { booking ->
                         item {
                             NearestBookingCard(
@@ -310,6 +315,30 @@ private fun NewsCard(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun OfflineBanner() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.secondaryContainer)
+            .padding(horizontal = 16.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Icon(
+            imageVector = Icons.Outlined.CloudOff,
+            contentDescription = null,
+            modifier = Modifier.size(18.dp),
+            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
+        Text(
+            text = "Нет подключения. Показаны сохранённые данные.",
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
     }
 }
 

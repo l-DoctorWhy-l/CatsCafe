@@ -15,6 +15,7 @@ dependencies {
     implementation(projects.common.commonUtils)
     implementation(projects.core.coreNavigation.coreNavigationApi)
     implementation(projects.core.coreNetwork.coreNetworkApi)
+    implementation(projects.core.coreAccount.coreAccountApi)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)
@@ -22,6 +23,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
 
     implementation(platform(libs.koin.bom))
     implementation(libs.koin.core)

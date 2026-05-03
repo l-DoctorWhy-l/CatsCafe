@@ -19,5 +19,11 @@ internal class AccountManagerMock : AccountManager {
 
     override val authStatus: AuthStatus = AuthStatus.Auth(mockUser)
 
+    override fun saveToken(token: String) = Unit
+
+    override fun getToken(): String? = null
+
+    override fun setUser(user: User) = Unit
+
     override fun logout() = Unit
 }

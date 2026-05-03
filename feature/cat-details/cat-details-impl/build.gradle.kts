@@ -9,10 +9,13 @@ android {
 
 dependencies {
     implementation(projects.feature.catDetails.catDetailsApi)
+    implementation(projects.feature.booking.bookingApi)
+    implementation(projects.feature.helpCat.helpCatApi)
 
     implementation(projects.common.commonUi)
     implementation(projects.common.commonUtils)
     implementation(projects.core.coreNavigation.coreNavigationApi)
+    implementation(projects.core.coreNetwork.coreNetworkApi)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)

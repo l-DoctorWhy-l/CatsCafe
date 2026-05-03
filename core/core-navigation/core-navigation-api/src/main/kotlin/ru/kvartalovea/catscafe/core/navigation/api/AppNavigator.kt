@@ -21,4 +21,6 @@ interface AppNavigator {
      * @param inclusive если true — удалить и сам маршрут [route].
      */
     fun popBackStackTo(route: Any, inclusive: Boolean = false)
+
+    fun navigateAndClearStack(route: Any)
 }

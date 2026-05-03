@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.kvartalovea.catscafe.core.navigation.api.AppNavigator
+import ru.kvartalovea.catscafe.feature.booking.api.BookingRoute
+import ru.kvartalovea.catscafe.feature.helpcat.api.HelpCatRoute
 import ru.kvartalovea.catscafe.feature.catdetails.impl.domain.usecase.GetCatDetailsUseCase
 import ru.kvartalovea.catscafe.feature.catdetails.impl.presentation.model.CatDetailsUiEvent
 import ru.kvartalovea.catscafe.feature.catdetails.impl.presentation.model.CatDetailsUiState
@@ -28,8 +30,11 @@ internal class CatDetailsViewModel(
     fun onEvent(event: CatDetailsUiEvent) {
         when (event) {
             CatDetailsUiEvent.OnBackClick -> navigator.popBackStack()
-            CatDetailsUiEvent.OnHelpCatClick -> Unit
-            CatDetailsUiEvent.OnBookVisitClick -> Unit
+            CatDetailsUiEvent.OnHelpCatClick -> {
+                val content = _state.value as? CatDetailsUiState.Content ?: return
+                navigator.navigate(HelpCatRoute(catId = catId, catName = content.cat.name))
+            }
+            CatDetailsUiEvent.OnBookVisitClick -> navigator.navigate(BookingRoute(preselectedCatId = catId))
         }
     }
 

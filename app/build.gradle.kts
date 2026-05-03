@@ -17,7 +17,7 @@ android {
 
     buildTypes {
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://api.catscafe.example/\"")
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/\"")
         }
         release {
             isMinifyEnabled = false
@@ -55,6 +55,7 @@ dependencies {
     implementation(projects.feature.catDetails.catDetailsImpl)
     implementation(projects.feature.myBookings.myBookingsImpl)
     implementation(projects.feature.donations.donationsImpl)
+    implementation(projects.feature.helpCat.helpCatImpl)
     implementation(projects.feature.splash.splashApi)
     implementation(projects.feature.home.homeApi)
     implementation(projects.feature.catalog.catalogApi)

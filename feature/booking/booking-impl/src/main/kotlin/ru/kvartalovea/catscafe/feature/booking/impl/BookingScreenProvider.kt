@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import ru.kvartalovea.catscafe.core.navigation.api.ScreenProvider
 import ru.kvartalovea.catscafe.feature.booking.api.BookingRoute
-import ru.kvartalovea.catscafe.feature.booking.impl.presentation.BookingScreen
+import ru.kvartalovea.catscafe.feature.booking.impl.presentation.screen.BookingScreen
 
 internal class BookingScreenProvider : ScreenProvider {
 

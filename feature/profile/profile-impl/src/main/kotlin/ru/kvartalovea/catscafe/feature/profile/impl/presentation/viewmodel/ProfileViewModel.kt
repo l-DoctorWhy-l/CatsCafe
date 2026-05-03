@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import ru.kvartalovea.catscafe.core.account.api.AccountManager
 import ru.kvartalovea.catscafe.core.navigation.api.AppNavigator
+import ru.kvartalovea.catscafe.feature.auth.api.AuthRoute
 import ru.kvartalovea.catscafe.feature.donations.api.DonationsRoute
 import ru.kvartalovea.catscafe.feature.mybookings.api.MyBookingsRoute
 import ru.kvartalovea.catscafe.feature.profile.impl.presentation.model.ProfileUiEvent
@@ -24,8 +25,13 @@ internal class ProfileViewModel(
             ProfileUiEvent.OnMyBookingsClick -> navigator.navigate(MyBookingsRoute)
             ProfileUiEvent.OnDonationsHistoryClick -> navigator.navigate(DonationsRoute)
             ProfileUiEvent.OnNotificationSettingsClick -> Unit
-            ProfileUiEvent.OnLogoutClick -> Unit
+            ProfileUiEvent.OnLogoutClick -> logout()
         }
+    }
+
+    private fun logout() {
+        accountManager.logout()
+        navigator.navigateAndClearStack(AuthRoute)
     }
 
     private fun buildState(): ProfileUiState {

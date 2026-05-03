@@ -12,6 +12,7 @@ dependencies {
     implementation(projects.common.commonUi)
     implementation(projects.common.commonUtils)
     implementation(projects.core.coreNavigation.coreNavigationApi)
+    implementation(projects.core.coreNetwork.coreNetworkApi)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)

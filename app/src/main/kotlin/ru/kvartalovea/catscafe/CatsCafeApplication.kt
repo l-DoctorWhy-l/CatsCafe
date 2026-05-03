@@ -6,6 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import ru.kvartalovea.catscafe.core.account.impl.coreAccountModule
+import ru.kvartalovea.catscafe.core.account.impl.createAccountManager
 import ru.kvartalovea.catscafe.core.database.impl.coreDatabaseModule
 import ru.kvartalovea.catscafe.core.navigation.impl.coreNavigationModule
 import ru.kvartalovea.catscafe.core.network.impl.NetworkConfig
@@ -16,11 +17,14 @@ import ru.kvartalovea.catscafe.feature.catalog.impl.featureCatalogModule
 import ru.kvartalovea.catscafe.feature.catdetails.impl.featureCatDetailsModule
 import ru.kvartalovea.catscafe.feature.mybookings.impl.featureMyBookingsModule
 import ru.kvartalovea.catscafe.feature.donations.impl.featureDonationsModule
+import ru.kvartalovea.catscafe.feature.helpcat.impl.featureHelpCatModule
 import ru.kvartalovea.catscafe.feature.home.impl.featureHomeModule
 import ru.kvartalovea.catscafe.feature.profile.impl.featureProfileModule
 import ru.kvartalovea.catscafe.feature.splash.impl.featureSplashModule
 
 class CatsCafeApplication : Application() {
+
+    private val accountManager by lazy { createAccountManager(applicationContext) }
 
     override fun onCreate() {
         super.onCreate()
@@ -29,14 +33,15 @@ class CatsCafeApplication : Application() {
             androidContext(this@CatsCafeApplication)
             modules(
                 coreNetworkModule(
-                    NetworkConfig(
+                    config = NetworkConfig(
                         baseUrl = BuildConfig.BASE_URL,
                         isDebug = BuildConfig.DEBUG,
                     ),
+                    tokenProvider = { accountManager.getToken() },
                 ),
                 coreDatabaseModule,
                 coreNavigationModule,
-                coreAccountModule,
+                coreAccountModule(accountManager),
                 featureSplashModule,
                 featureAuthModule,
                 featureHomeModule,
@@ -46,6 +51,7 @@ class CatsCafeApplication : Application() {
                 featureCatDetailsModule,
                 featureMyBookingsModule,
                 featureDonationsModule,
+                featureHelpCatModule,
             )
         }
     }

@@ -15,6 +15,7 @@ dependencies {
     implementation(projects.common.commonUi)
     implementation(projects.common.commonUtils)
     implementation(projects.core.coreNavigation.coreNavigationApi)
+    implementation(projects.core.coreAccount.coreAccountApi)
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.navigation.compose)

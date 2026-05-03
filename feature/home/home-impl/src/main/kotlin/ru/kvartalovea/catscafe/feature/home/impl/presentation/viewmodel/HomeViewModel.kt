@@ -38,24 +38,29 @@ internal class HomeViewModel(
     private fun loadData() {
         viewModelScope.launch {
             _state.value = HomeUiState.Loading
+            try {
+                val newsDeferred = async { getNewsUseCase() }
+                val bookingDeferred = async { getNearestBookingUseCase() }
 
-            val newsDeferred = async { getNewsUseCase() }
-            val bookingDeferred = async { getNearestBookingUseCase() }
+                val newsResult = newsDeferred.await()
+                val bookingResult = bookingDeferred.await()
 
-            val newsResult = newsDeferred.await()
-            val bookingResult = bookingDeferred.await()
-
-            _state.value = when {
-                newsResult.isFailure -> HomeUiState.Error(
-                    newsResult.exceptionOrNull()?.message ?: "Неизвестная ошибка",
-                )
-                bookingResult.isFailure -> HomeUiState.Error(
-                    bookingResult.exceptionOrNull()?.message ?: "Неизвестная ошибка",
-                )
-                else -> HomeUiState.Content(
-                    nearestBooking = bookingResult.getOrNull()?.toUiModel(),
-                    newsList = newsResult.getOrNull()?.toUiModels() ?: emptyList(),
-                )
+                _state.value = when {
+                    newsResult.isFailure -> HomeUiState.Error(
+                        newsResult.exceptionOrNull()?.message ?: "Неизвестная ошибка",
+                    )
+                    else -> {
+                        val newsData = newsResult.getOrThrow()
+                        val bookingData = bookingResult.getOrNull()
+                        HomeUiState.Content(
+                            nearestBooking = bookingData?.booking?.toUiModel(),
+                            newsList = newsData.items.toUiModels(),
+                            isOffline = newsData.isFromCache || bookingData?.isFromCache == true,
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                _state.value = HomeUiState.Error(e.message ?: "Неизвестная ошибка")
             }
         }
     }

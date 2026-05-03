@@ -7,5 +7,6 @@ internal sealed interface HomeUiState {
         val userName: String = "",
         val nearestBooking: NearestBookingUiModel?,
         val newsList: List<NewsItemUiModel>,
+        val isOffline: Boolean = false,
     ) : HomeUiState
 }

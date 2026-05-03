@@ -1,20 +1,22 @@
 package ru.kvartalovea.catscafe.feature.home.impl.data.repository
 
 import kotlinx.coroutines.delay
+import ru.kvartalovea.catscafe.feature.home.impl.domain.model.BookingResult
 import ru.kvartalovea.catscafe.feature.home.impl.domain.model.NearestBooking
 import ru.kvartalovea.catscafe.feature.home.impl.domain.model.NewsItem
+import ru.kvartalovea.catscafe.feature.home.impl.domain.model.NewsResult
 import ru.kvartalovea.catscafe.feature.home.impl.domain.repository.HomeRepository
 
 internal class HomeRepositoryMock : HomeRepository {
 
-    override suspend fun getNews(): Result<List<NewsItem>> {
+    override suspend fun getNews(): Result<NewsResult> {
         delay(MOCK_DELAY_MS)
-        return Result.success(MOCK_NEWS)
+        return Result.success(NewsResult(items = MOCK_NEWS, isFromCache = false))
     }
 
-    override suspend fun getNearestBooking(): Result<NearestBooking?> {
+    override suspend fun getNearestBooking(): Result<BookingResult> {
         delay(MOCK_DELAY_MS)
-        return Result.success(MOCK_BOOKING)
+        return Result.success(BookingResult(booking = MOCK_BOOKING, isFromCache = false))
     }
 
     private companion object {

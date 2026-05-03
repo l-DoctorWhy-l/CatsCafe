@@ -5,8 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NearestBookingDto(
-    @SerialName("date") val date: String,
-    @SerialName("time") val time: String,
+    @SerialName("booking_time") val bookingTime: String,
     @SerialName("guests_count") val guestsCount: Int,
     @SerialName("qr_code_url") val qrCodeUrl: String? = null,
 )

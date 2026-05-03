@@ -5,5 +5,5 @@ package ru.kvartalovea.catscafe.core.database.impl
  */
 internal object DatabaseConfig {
     const val NAME: String = "cats_cafe.db"
-    const val VERSION: Int = 1
+    const val VERSION: Int = 2
 }

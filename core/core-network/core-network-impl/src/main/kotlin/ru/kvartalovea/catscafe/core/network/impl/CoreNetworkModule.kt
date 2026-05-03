@@ -9,9 +9,10 @@ import retrofit2.Retrofit
 /**
  * Koin-модуль `core-network-impl`.
  */
-fun coreNetworkModule(config: NetworkConfig): Module = module {
+fun coreNetworkModule(config: NetworkConfig, tokenProvider: () -> String?): Module = module {
     single { config }
     single<Json> { NetworkJson }
-    single<OkHttpClient> { buildOkHttpClient(get()) }
+    single { AuthInterceptor(tokenProvider) }
+    single<OkHttpClient> { buildOkHttpClient(get(), get()) }
     single<Retrofit> { buildRetrofit(okHttpClient = get(), json = get(), config = get()) }
 }

@@ -39,4 +39,10 @@ internal class AppNavigatorImpl : AppNavigator {
     override fun popBackStackTo(route: Any, inclusive: Boolean) {
         controller?.popBackStack(route, inclusive)
     }
+
+    override fun navigateAndClearStack(route: Any) {
+        controller?.navigate(route) {
+            popUpTo(0) { inclusive = true }
+        }
+    }
 }
