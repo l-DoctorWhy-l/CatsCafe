@@ -1,0 +1,17 @@
+<resources>
+    <string name="booking_title">Book a Visit</string>
+    <string name="booking_prev_month">Previous month</string>
+    <string name="booking_next_month">Next month</string>
+    <string name="booking_select_time">Select time</string>
+    <string name="booking_guests_count">Number of guests</string>
+    <string name="booking_confirm">Confirm booking</string>
+    <string name="booking_confirmed_title">Booking confirmed!</string>
+    <string name="booking_confirmed_details">Booking details will appear in My Bookings</string>
+    <string name="booking_day_mon">Mon</string>
+    <string name="booking_day_tue">Tue</string>
+    <string name="booking_day_wed">Wed</string>
+    <string name="booking_day_thu">Thu</string>
+    <string name="booking_day_fri">Fri</string>
+    <string name="booking_day_sat">Sat</string>
+    <string name="booking_day_sun">Sun</string>
+</resources>

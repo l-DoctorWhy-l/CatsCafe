@@ -1,0 +1,12 @@
+<resources>
+    <string name="cat_details_not_found">Cat not found</string>
+    <string name="cat_details_back">Back</string>
+    <string name="cat_details_looking_for_home">Looking for home</string>
+    <string name="cat_details_about">About %s</string>
+    <string name="cat_details_characteristics">Characteristics</string>
+    <string name="cat_details_age">Age:</string>
+    <string name="cat_details_breed">Breed:</string>
+    <string name="cat_details_temperament">Temperament:</string>
+    <string name="cat_details_help_cat">Help the cat</string>
+    <string name="cat_details_book_visit">Book a visit</string>
+</resources>

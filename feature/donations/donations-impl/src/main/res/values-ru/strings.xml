@@ -1,0 +1,9 @@
+<resources>
+    <string name="donations_title">История пожертвований</string>
+    <string name="donations_back">Назад</string>
+    <string name="donations_retry">Повторить</string>
+    <string name="donations_empty_title">История пуста</string>
+    <string name="donations_empty_subtitle">Вы ещё не делали пожертвований</string>
+
+    <string name="error_unknown">Неизвестная ошибка</string>
+</resources>

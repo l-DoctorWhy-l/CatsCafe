@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.kvartalovea.catscafe.common.utils.UiText
+import ru.kvartalovea.catscafe.feature.home.impl.R
 import ru.kvartalovea.catscafe.feature.home.impl.domain.usecase.GetNearestBookingUseCase
 import ru.kvartalovea.catscafe.feature.home.impl.domain.usecase.GetNewsUseCase
 import ru.kvartalovea.catscafe.feature.home.impl.presentation.model.HomeUiEvent
@@ -30,7 +32,14 @@ internal class HomeViewModel(
         when (event) {
             HomeUiEvent.Refresh -> loadData()
             is HomeUiEvent.OnNewsClick -> Unit
-            HomeUiEvent.OnBookingClick -> Unit
+            HomeUiEvent.OnBookingClick -> {
+                val current = _state.value as? HomeUiState.Content ?: return
+                _state.value = current.copy(showQrDialog = true)
+            }
+            HomeUiEvent.OnQrDialogDismiss -> {
+                val current = _state.value as? HomeUiState.Content ?: return
+                _state.value = current.copy(showQrDialog = false)
+            }
             HomeUiEvent.OnNotificationsClick -> Unit
         }
     }
@@ -47,7 +56,8 @@ internal class HomeViewModel(
 
                 _state.value = when {
                     newsResult.isFailure -> HomeUiState.Error(
-                        newsResult.exceptionOrNull()?.message ?: "Неизвестная ошибка",
+                        newsResult.exceptionOrNull()?.message?.let { UiText.DynamicString(it) }
+                            ?: UiText.StringRes(R.string.error_unknown),
                     )
                     else -> {
                         val newsData = newsResult.getOrThrow()
@@ -60,7 +70,10 @@ internal class HomeViewModel(
                     }
                 }
             } catch (e: Exception) {
-                _state.value = HomeUiState.Error(e.message ?: "Неизвестная ошибка")
+                _state.value = HomeUiState.Error(
+                    e.message?.let { UiText.DynamicString(it) }
+                        ?: UiText.StringRes(R.string.error_unknown),
+                )
             }
         }
     }

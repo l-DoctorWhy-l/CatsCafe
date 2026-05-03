@@ -37,11 +37,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import ru.kvartalovea.catscafe.feature.catdetails.impl.R
 import ru.kvartalovea.catscafe.feature.catdetails.impl.presentation.model.CatDetailUiModel
 import ru.kvartalovea.catscafe.feature.catdetails.impl.presentation.model.CatDetailsUiEvent
 import ru.kvartalovea.catscafe.feature.catdetails.impl.presentation.model.CatDetailsUiState
@@ -72,7 +74,7 @@ private fun CatDetailsContent(
 
             is CatDetailsUiState.NotFound -> {
                 Text(
-                    text = "Котик не найден",
+                    text = stringResource(R.string.cat_details_not_found),
                     modifier = Modifier.align(Alignment.Center),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -153,7 +155,7 @@ private fun CatDetailsBody(
                     // Bio section
                     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         Text(
-                            text = "О ${cat.name}",
+                            text = stringResource(R.string.cat_details_about, cat.name),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                         )
@@ -192,7 +194,7 @@ private fun BackButton(
     ) {
         Icon(
             imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-            contentDescription = "Назад",
+            contentDescription = stringResource(R.string.cat_details_back),
             tint = Color.Black,
             modifier = Modifier.size(20.dp),
         )
@@ -206,7 +208,7 @@ private fun LookingForHomeBadge() {
         color = Color(0xFFE8F5E9),
     ) {
         Text(
-            text = "Ищет дом",
+            text = stringResource(R.string.cat_details_looking_for_home),
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
             style = MaterialTheme.typography.labelMedium,
             color = Color(0xFF2E7D32),
@@ -224,16 +226,16 @@ private fun CharacteristicsCard(cat: CatDetailUiModel) {
     ) {
         Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {
             Text(
-                text = "Характеристики",
+                text = stringResource(R.string.cat_details_characteristics),
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(bottom = 12.dp),
             )
-            CharacteristicRow(label = "Возраст:", value = cat.age)
+            CharacteristicRow(label = stringResource(R.string.cat_details_age), value = cat.age)
             Spacer(modifier = Modifier.height(8.dp))
-            CharacteristicRow(label = "Порода:", value = cat.breed)
+            CharacteristicRow(label = stringResource(R.string.cat_details_breed), value = cat.breed)
             Spacer(modifier = Modifier.height(8.dp))
-            CharacteristicRow(label = "Характер:", value = cat.temperament)
+            CharacteristicRow(label = stringResource(R.string.cat_details_temperament), value = cat.temperament)
         }
     }
 }
@@ -285,7 +287,7 @@ private fun ActionButtons(
                 modifier = Modifier.size(18.dp),
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Помочь котику", fontWeight = FontWeight.Medium)
+            Text(text = stringResource(R.string.cat_details_help_cat), fontWeight = FontWeight.Medium)
         }
         Button(
             onClick = onBookClick,
@@ -296,7 +298,7 @@ private fun ActionButtons(
                 contentColor = Color.White,
             ),
         ) {
-            Text(text = "Забронировать визит", fontWeight = FontWeight.Medium)
+            Text(text = stringResource(R.string.cat_details_book_visit), fontWeight = FontWeight.Medium)
         }
     }
 }

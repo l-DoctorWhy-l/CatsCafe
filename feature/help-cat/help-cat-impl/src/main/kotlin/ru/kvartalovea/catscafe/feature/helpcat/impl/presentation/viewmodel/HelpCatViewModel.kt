@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.kvartalovea.catscafe.core.navigation.api.AppNavigator
+import ru.kvartalovea.catscafe.common.utils.UiText
+import ru.kvartalovea.catscafe.feature.helpcat.impl.R
 import ru.kvartalovea.catscafe.feature.helpcat.impl.domain.usecase.MakeDonationUseCase
 import ru.kvartalovea.catscafe.feature.helpcat.impl.presentation.model.HelpCatUiEvent
 import ru.kvartalovea.catscafe.feature.helpcat.impl.presentation.model.HelpCatUiState
@@ -34,7 +36,7 @@ internal class HelpCatViewModel(
         val s = _state.value as? HelpCatUiState.Content ?: return
         val amountValue = s.amount.trim().toIntOrNull()
         if (amountValue == null || amountValue <= 0) {
-            updateContent { copy(amountError = "Введите корректную сумму") }
+            updateContent { copy(amountError = UiText.StringRes(R.string.error_invalid_amount)) }
             return
         }
         updateContent { copy(isLoading = true, amountError = null) }
@@ -49,7 +51,8 @@ internal class HelpCatViewModel(
                     updateContent {
                         copy(
                             isLoading = false,
-                            amountError = error.message ?: "Ошибка отправки пожертвования",
+                            amountError = error.message?.let { UiText.DynamicString(it) }
+                                ?: UiText.StringRes(R.string.error_donation_failed),
                         )
                     }
                 }

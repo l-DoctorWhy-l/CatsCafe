@@ -35,9 +35,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
+import ru.kvartalovea.catscafe.common.ui.asString
+import ru.kvartalovea.catscafe.feature.donations.impl.R
 import ru.kvartalovea.catscafe.feature.donations.impl.presentation.model.DonationUiModel
 import ru.kvartalovea.catscafe.feature.donations.impl.presentation.model.DonationsUiEvent
 import ru.kvartalovea.catscafe.feature.donations.impl.presentation.model.DonationsUiState
@@ -62,7 +65,7 @@ private fun DonationsContent(
             TopAppBar(
                 title = {
                     Text(
-                        text = "История пожертвований",
+                        text = stringResource(R.string.donations_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
@@ -71,7 +74,7 @@ private fun DonationsContent(
                     IconButton(onClick = { onEvent(DonationsUiEvent.OnBackClick) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = "Назад",
+                            contentDescription = stringResource(R.string.donations_back),
                         )
                     }
                 },
@@ -107,12 +110,12 @@ private fun DonationsContent(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         Text(
-                            text = state.message,
+                            text = state.message.asString(),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodyMedium,
                         )
                         TextButton(onClick = { onEvent(DonationsUiEvent.Refresh) }) {
-                            Text("Повторить")
+                            Text(stringResource(R.string.donations_retry))
                         }
                     }
                 }
@@ -157,12 +160,12 @@ private fun EmptyDonationsState(modifier: Modifier = Modifier) {
                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
             )
             Text(
-                text = "История пуста",
+                text = stringResource(R.string.donations_empty_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium,
             )
             Text(
-                text = "Вы ещё не делали пожертвований",
+                text = stringResource(R.string.donations_empty_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )

@@ -1,0 +1,16 @@
+<resources>
+    <string name="help_cat_title">Помочь котику</string>
+    <string name="help_cat_back">Назад</string>
+    <string name="help_cat_donation_amount">Сумма пожертвования</string>
+    <string name="help_cat_amount_label">Сумма</string>
+    <string name="help_cat_amount_prefix">₽</string>
+    <string name="help_cat_amount_placeholder">Например, 500</string>
+    <string name="help_cat_donate_button">Пожертвовать</string>
+    <string name="help_cat_description">Ваше пожертвование поможет позаботиться о котике</string>
+    <string name="help_cat_success_title">Спасибо!</string>
+    <string name="help_cat_success_subtitle">Ваше пожертвование засчитано</string>
+    <string name="help_cat_legal">Данный функционал является демонстрационным, никакие транзакции приложение не производит.</string>
+
+    <string name="error_invalid_amount">Введите корректную сумму</string>
+    <string name="error_donation_failed">Ошибка отправки пожертвования</string>
+</resources>

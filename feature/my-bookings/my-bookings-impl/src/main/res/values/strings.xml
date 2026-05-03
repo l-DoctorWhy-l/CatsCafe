@@ -1,0 +1,17 @@
+<resources>
+    <string name="my_bookings_title">My Bookings</string>
+    <string name="my_bookings_back">Back</string>
+    <string name="my_bookings_retry">Retry</string>
+    <string name="my_bookings_empty_title">No bookings</string>
+    <string name="my_bookings_empty_subtitle">Your bookings will appear here</string>
+    <string name="my_bookings_status_upcoming">Upcoming</string>
+    <string name="my_bookings_status_past">Past</string>
+    <string name="my_bookings_status_cancelled">Cancelled</string>
+
+    <plurals name="my_bookings_guests">
+        <item quantity="one">guest</item>
+        <item quantity="other">guests</item>
+    </plurals>
+
+    <string name="error_unknown">Unknown error</string>
+</resources>

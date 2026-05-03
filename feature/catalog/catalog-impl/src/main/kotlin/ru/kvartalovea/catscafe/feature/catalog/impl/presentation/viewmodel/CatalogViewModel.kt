@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.kvartalovea.catscafe.core.navigation.api.AppNavigator
+import ru.kvartalovea.catscafe.common.utils.UiText
+import ru.kvartalovea.catscafe.feature.catalog.impl.R
 import ru.kvartalovea.catscafe.feature.catalog.impl.domain.model.Cat
 import ru.kvartalovea.catscafe.feature.catalog.impl.domain.usecase.GetCatsUseCase
 import ru.kvartalovea.catscafe.feature.catalog.impl.presentation.model.CatFilter
@@ -57,7 +59,8 @@ internal class CatalogViewModel(
                 updateContent()
             } else {
                 _state.value = CatalogUiState.Error(
-                    result.exceptionOrNull()?.message ?: "Неизвестная ошибка",
+                    result.exceptionOrNull()?.message?.let { UiText.DynamicString(it) }
+                        ?: UiText.StringRes(R.string.error_unknown),
                 )
             }
         }

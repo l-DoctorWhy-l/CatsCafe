@@ -36,9 +36,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
+import ru.kvartalovea.catscafe.common.ui.asString
+import ru.kvartalovea.catscafe.feature.mybookings.impl.R
 import ru.kvartalovea.catscafe.feature.mybookings.impl.presentation.model.BookingStatusUiModel
 import ru.kvartalovea.catscafe.feature.mybookings.impl.presentation.model.MyBookingsUiEvent
 import ru.kvartalovea.catscafe.feature.mybookings.impl.presentation.model.MyBookingsUiState
@@ -64,7 +68,7 @@ private fun MyBookingsContent(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Мои бронирования",
+                        text = stringResource(R.string.my_bookings_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
@@ -73,7 +77,7 @@ private fun MyBookingsContent(
                     IconButton(onClick = { onEvent(MyBookingsUiEvent.OnBackClick) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
-                            contentDescription = "Назад",
+                            contentDescription = stringResource(R.string.my_bookings_back),
                         )
                     }
                 },
@@ -109,12 +113,12 @@ private fun MyBookingsContent(
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         Text(
-                            text = state.message,
+                            text = state.message.asString(),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodyMedium,
                         )
                         TextButton(onClick = { onEvent(MyBookingsUiEvent.Refresh) }) {
-                            Text("Повторить")
+                            Text(stringResource(R.string.my_bookings_retry))
                         }
                     }
                 }
@@ -162,12 +166,12 @@ private fun EmptyBookingsState(modifier: Modifier = Modifier) {
                 tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
             )
             Text(
-                text = "Нет бронирований",
+                text = stringResource(R.string.my_bookings_empty_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium,
             )
             Text(
-                text = "Ваши бронирования появятся здесь",
+                text = stringResource(R.string.my_bookings_empty_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -218,7 +222,7 @@ private fun BookingCard(booking: UserBookingUiModel) {
                             tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                         Text(
-                            text = "${booking.guestsCount} ${guestsLabel(booking.guestsCount)}",
+                            text = "${booking.guestsCount} ${pluralStringResource(R.plurals.my_bookings_guests, booking.guestsCount)}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -243,17 +247,11 @@ private fun StatusChip(status: BookingStatusUiModel) {
         color = containerColor,
     ) {
         Text(
-            text = status.label,
+            text = stringResource(status.labelRes),
             modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
             style = MaterialTheme.typography.labelSmall,
             color = textColor,
             fontWeight = FontWeight.Medium,
         )
     }
-}
-
-private fun guestsLabel(count: Int): String = when {
-    count % 10 == 1 && count % 100 != 11 -> "гость"
-    count % 10 in 2..4 && count % 100 !in 12..14 -> "гостя"
-    else -> "гостей"
 }

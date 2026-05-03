@@ -1,5 +1,6 @@
 package ru.kvartalovea.catscafe
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -39,7 +41,7 @@ import kotlin.reflect.KClass
 private data class BottomTab(
     val route: Any,
     val routeClass: KClass<*>,
-    val label: String,
+    @StringRes val labelRes: Int,
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
 )
@@ -48,28 +50,28 @@ private val BOTTOM_TABS = listOf(
     BottomTab(
         route = HomeRoute,
         routeClass = HomeRoute::class,
-        label = "Главная",
+        labelRes = R.string.tab_home,
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
     ),
     BottomTab(
         route = CatalogRoute,
         routeClass = CatalogRoute::class,
-        label = "Каталог",
+        labelRes = R.string.tab_catalog,
         selectedIcon = Icons.Filled.Pets,
         unselectedIcon = Icons.Outlined.Pets,
     ),
     BottomTab(
         route = BookingRoute(),
         routeClass = BookingRoute::class,
-        label = "Бронь",
+        labelRes = R.string.tab_booking,
         selectedIcon = Icons.Filled.CalendarMonth,
         unselectedIcon = Icons.Outlined.CalendarMonth,
     ),
     BottomTab(
         route = ProfileRoute,
         routeClass = ProfileRoute::class,
-        label = "Профиль",
+        labelRes = R.string.tab_profile,
         selectedIcon = Icons.Filled.Person,
         unselectedIcon = Icons.Outlined.Person,
     ),
@@ -84,6 +86,7 @@ fun MainScaffold() {
     val showBottomBar = BOTTOM_TABS.any { tab ->
         currentDestination?.hasRoute(tab.routeClass) == true
     }
+    val isSplashScreen = currentDestination?.hasRoute(SplashRoute::class) == true
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -104,10 +107,14 @@ fun MainScaffold() {
         AppNavHost(
             startDestination = SplashRoute,
             navController = navController,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .consumeWindowInsets(paddingValues),
+            modifier = if (isSplashScreen) {
+                Modifier.fillMaxSize()
+            } else {
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .consumeWindowInsets(paddingValues)
+            },
         )
     }
 }
@@ -123,16 +130,17 @@ private fun AppBottomNavigationBar(
     ) {
         BOTTOM_TABS.forEach { tab ->
             val isSelected = currentDestination?.hasRoute(tab.routeClass) == true
+            val label = stringResource(tab.labelRes)
             NavigationBarItem(
                 selected = isSelected,
                 onClick = { onTabSelected(tab) },
                 icon = {
                     Icon(
                         imageVector = if (isSelected) tab.selectedIcon else tab.unselectedIcon,
-                        contentDescription = tab.label,
+                        contentDescription = label,
                     )
                 },
-                label = { Text(text = tab.label) },
+                label = { Text(text = label) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = MaterialTheme.colorScheme.primary,
                     selectedTextColor = MaterialTheme.colorScheme.primary,

@@ -35,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -43,6 +44,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
+import ru.kvartalovea.catscafe.common.ui.asString
+import ru.kvartalovea.catscafe.common.utils.UiText
+import ru.kvartalovea.catscafe.feature.auth.impl.R
 import ru.kvartalovea.catscafe.feature.auth.impl.presentation.model.AuthUiEvent
 import ru.kvartalovea.catscafe.feature.auth.impl.presentation.model.AuthUiState
 import ru.kvartalovea.catscafe.feature.auth.impl.presentation.viewmodel.AuthViewModel
@@ -98,7 +102,7 @@ private fun LoginContent(
         Spacer(modifier = Modifier.height(40.dp))
 
         Text(
-            text = "Войти в аккаунт",
+            text = stringResource(R.string.auth_sign_in_title),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
         )
@@ -107,8 +111,8 @@ private fun LoginContent(
         AuthTextField(
             value = state.email,
             onValueChange = { onEvent(AuthUiEvent.LoginEmailChanged(it)) },
-            label = "Email",
-            error = state.emailError,
+            label = stringResource(R.string.auth_email_label),
+            error = state.emailError?.asString(),
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
             onImeAction = { focusManager.moveFocus(FocusDirection.Down) },
@@ -118,8 +122,8 @@ private fun LoginContent(
         PasswordTextField(
             value = state.password,
             onValueChange = { onEvent(AuthUiEvent.LoginPasswordChanged(it)) },
-            label = "Пароль",
-            error = state.passwordError,
+            label = stringResource(R.string.auth_password_label),
+            error = state.passwordError?.asString(),
             isVisible = state.isPasswordVisible,
             onToggleVisibility = { onEvent(AuthUiEvent.LoginPasswordVisibilityToggled) },
             imeAction = ImeAction.Done,
@@ -131,15 +135,15 @@ private fun LoginContent(
         Spacer(modifier = Modifier.height(28.dp))
 
         AuthButton(
-            text = "Войти",
+            text = stringResource(R.string.auth_sign_in_button),
             isLoading = state.isLoading,
             onClick = { onEvent(AuthUiEvent.LoginSubmit) },
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         SwitchAuthRow(
-            prompt = "Нет аккаунта?",
-            actionLabel = "Зарегистрироваться",
+            prompt = stringResource(R.string.auth_no_account),
+            actionLabel = stringResource(R.string.auth_register_button),
             onClick = { onEvent(AuthUiEvent.OnGoToRegister) },
         )
 
@@ -170,7 +174,7 @@ private fun RegisterContent(
         Spacer(modifier = Modifier.height(40.dp))
 
         Text(
-            text = "Создать аккаунт",
+            text = stringResource(R.string.auth_create_account_title),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
         )
@@ -179,8 +183,8 @@ private fun RegisterContent(
         AuthTextField(
             value = state.name,
             onValueChange = { onEvent(AuthUiEvent.RegisterNameChanged(it)) },
-            label = "Имя",
-            error = state.nameError,
+            label = stringResource(R.string.auth_name_label),
+            error = state.nameError?.asString(),
             keyboardType = KeyboardType.Text,
             imeAction = ImeAction.Next,
             onImeAction = { focusManager.moveFocus(FocusDirection.Down) },
@@ -190,8 +194,8 @@ private fun RegisterContent(
         AuthTextField(
             value = state.email,
             onValueChange = { onEvent(AuthUiEvent.RegisterEmailChanged(it)) },
-            label = "Email",
-            error = state.emailError,
+            label = stringResource(R.string.auth_email_label),
+            error = state.emailError?.asString(),
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next,
             onImeAction = { focusManager.moveFocus(FocusDirection.Down) },
@@ -201,8 +205,8 @@ private fun RegisterContent(
         PasswordTextField(
             value = state.password,
             onValueChange = { onEvent(AuthUiEvent.RegisterPasswordChanged(it)) },
-            label = "Пароль",
-            error = state.passwordError,
+            label = stringResource(R.string.auth_password_label),
+            error = state.passwordError?.asString(),
             isVisible = state.isPasswordVisible,
             onToggleVisibility = { onEvent(AuthUiEvent.RegisterPasswordVisibilityToggled) },
             imeAction = ImeAction.Next,
@@ -213,8 +217,8 @@ private fun RegisterContent(
         PasswordTextField(
             value = state.confirmPassword,
             onValueChange = { onEvent(AuthUiEvent.RegisterConfirmPasswordChanged(it)) },
-            label = "Повторите пароль",
-            error = state.confirmPasswordError,
+            label = stringResource(R.string.auth_repeat_password_label),
+            error = state.confirmPasswordError?.asString(),
             isVisible = state.isPasswordVisible,
             onToggleVisibility = { onEvent(AuthUiEvent.RegisterPasswordVisibilityToggled) },
             imeAction = ImeAction.Done,
@@ -226,15 +230,15 @@ private fun RegisterContent(
         Spacer(modifier = Modifier.height(28.dp))
 
         AuthButton(
-            text = "Зарегистрироваться",
+            text = stringResource(R.string.auth_register_button),
             isLoading = state.isLoading,
             onClick = { onEvent(AuthUiEvent.RegisterSubmit) },
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         SwitchAuthRow(
-            prompt = "Уже есть аккаунт?",
-            actionLabel = "Войти",
+            prompt = stringResource(R.string.auth_have_account),
+            actionLabel = stringResource(R.string.auth_sign_in_button),
             onClick = { onEvent(AuthUiEvent.OnGoToLogin) },
         )
 
@@ -252,7 +256,7 @@ private fun AppBranding() {
     ) {
         Text(text = "🐱", fontSize = 48.sp)
         Text(
-            text = "КотоКафе",
+            text = stringResource(R.string.auth_app_name),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary,
@@ -326,7 +330,11 @@ private fun PasswordTextField(
                 IconButton(onClick = onToggleVisibility) {
                     Icon(
                         imageVector = if (isVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,
-                        contentDescription = if (isVisible) "Скрыть пароль" else "Показать пароль",
+                        contentDescription = if (isVisible) {
+                            stringResource(R.string.auth_hide_password)
+                        } else {
+                            stringResource(R.string.auth_show_password)
+                        },
                     )
                 }
             },

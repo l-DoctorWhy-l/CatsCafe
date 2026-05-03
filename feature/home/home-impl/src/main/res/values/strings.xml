@@ -1,0 +1,20 @@
+<resources>
+    <string name="home_retry">Retry</string>
+    <string name="home_news_section">News &amp; Promotions</string>
+    <string name="home_notifications">Notifications</string>
+    <string name="home_qr_dialog_title">Booking QR code</string>
+    <string name="home_qr_unavailable">QR code unavailable</string>
+    <string name="home_close">Close</string>
+    <string name="home_nearest_booking">Nearest booking</string>
+    <string name="home_booking_date">Date: %s</string>
+    <string name="home_booking_time">Time: %s</string>
+    <string name="home_booking_guests">Guests: %s</string>
+    <string name="home_qr_code">QR code</string>
+    <string name="home_offline_banner">No connection. Showing cached data.</string>
+    <string name="home_greeting_night">Good night</string>
+    <string name="home_greeting_morning">Good morning</string>
+    <string name="home_greeting_afternoon">Good afternoon</string>
+    <string name="home_greeting_evening">Good evening</string>
+
+    <string name="error_unknown">Unknown error</string>
+</resources>

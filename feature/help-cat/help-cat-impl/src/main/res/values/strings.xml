@@ -1,0 +1,16 @@
+<resources>
+    <string name="help_cat_title">Help the Cat</string>
+    <string name="help_cat_back">Back</string>
+    <string name="help_cat_donation_amount">Donation amount</string>
+    <string name="help_cat_amount_label">Amount</string>
+    <string name="help_cat_amount_prefix">₽</string>
+    <string name="help_cat_amount_placeholder">E.g. 500</string>
+    <string name="help_cat_donate_button">Donate</string>
+    <string name="help_cat_description">Your donation will help take care of the cat</string>
+    <string name="help_cat_success_title">Thank you!</string>
+    <string name="help_cat_success_subtitle">Your donation has been counted</string>
+    <string name="help_cat_legal">This feature is for demonstration purposes only. No transactions are made by the app.</string>
+
+    <string name="error_invalid_amount">Enter a valid amount</string>
+    <string name="error_donation_failed">Failed to send donation</string>
+</resources>

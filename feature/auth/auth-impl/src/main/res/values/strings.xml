@@ -1,0 +1,22 @@
+<resources>
+    <string name="auth_sign_in_title">Sign In</string>
+    <string name="auth_create_account_title">Create Account</string>
+    <string name="auth_email_label">Email</string>
+    <string name="auth_password_label">Password</string>
+    <string name="auth_repeat_password_label">Repeat Password</string>
+    <string name="auth_name_label">Name</string>
+    <string name="auth_sign_in_button">Sign In</string>
+    <string name="auth_register_button">Sign Up</string>
+    <string name="auth_no_account">No account?</string>
+    <string name="auth_have_account">Already have an account?</string>
+    <string name="auth_app_name">CatsCafe</string>
+    <string name="auth_hide_password">Hide password</string>
+    <string name="auth_show_password">Show password</string>
+
+    <string name="error_field_required_password">Enter password</string>
+    <string name="error_field_required_name">Enter name</string>
+    <string name="error_passwords_mismatch">Passwords do not match</string>
+    <string name="error_field_required_email">Enter email</string>
+    <string name="error_email_invalid_format">Invalid email format</string>
+    <string name="error_password_too_short">Minimum 6 characters</string>
+</resources>

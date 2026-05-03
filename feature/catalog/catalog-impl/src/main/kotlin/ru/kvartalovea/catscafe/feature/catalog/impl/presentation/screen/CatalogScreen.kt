@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
@@ -49,6 +50,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import org.koin.androidx.compose.koinViewModel
+import ru.kvartalovea.catscafe.common.ui.asString
+import ru.kvartalovea.catscafe.feature.catalog.impl.R
 import ru.kvartalovea.catscafe.feature.catalog.impl.presentation.model.CatFilter
 import ru.kvartalovea.catscafe.feature.catalog.impl.presentation.model.CatUiModel
 import ru.kvartalovea.catscafe.feature.catalog.impl.presentation.model.CatalogUiEvent
@@ -74,7 +77,7 @@ private fun CatalogContent(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Наши котики",
+                        text = stringResource(R.string.catalog_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
@@ -111,12 +114,12 @@ private fun CatalogContent(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            text = state.message,
+                            text = state.message.asString(),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodyMedium,
                         )
                         TextButton(onClick = { onEvent(CatalogUiEvent.Refresh) }) {
-                            Text(text = "Повторить")
+                            Text(text = stringResource(R.string.catalog_retry))
                         }
                     }
                 }
@@ -169,7 +172,7 @@ private fun CatalogList(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = "Ничего не найдено",
+                        text = stringResource(R.string.catalog_empty),
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -198,14 +201,14 @@ private fun SearchField(
         modifier = modifier.fillMaxWidth(),
         placeholder = {
             Text(
-                text = "Поиск по имени...",
+                text = stringResource(R.string.catalog_search_placeholder),
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Outlined.Search,
-                contentDescription = "Поиск",
+                contentDescription = stringResource(R.string.catalog_search),
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         },
@@ -235,7 +238,7 @@ private fun FilterChipsRow(
             FilterChip(
                 selected = activeFilter == filter,
                 onClick = { onFilterSelected(filter) },
-                label = { Text(text = filter.label) },
+                label = { Text(text = stringResource(filter.labelRes)) },
                 colors = FilterChipDefaults.filterChipColors(
                     selectedContainerColor = MaterialTheme.colorScheme.primary,
                     selectedLabelColor = MaterialTheme.colorScheme.onPrimary,
@@ -293,10 +296,10 @@ private fun CatCard(
                     horizontalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
                     if (cat.isNew) {
-                        StatusBadge(text = "Новый", containerColor = Color(0xFF2196F3))
+                        StatusBadge(text = stringResource(R.string.cat_badge_new), containerColor = Color(0xFF2196F3))
                     }
                     if (cat.isLookingForHome) {
-                        StatusBadge(text = "Ищет дом", containerColor = Color(0xFF4CAF50))
+                        StatusBadge(text = stringResource(R.string.cat_badge_looking_for_home), containerColor = Color(0xFF4CAF50))
                     }
                 }
             }

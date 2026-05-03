@@ -1,5 +1,8 @@
 package ru.kvartalovea.catscafe.feature.mybookings.impl.presentation.model
 
+import androidx.annotation.StringRes
+import ru.kvartalovea.catscafe.feature.mybookings.impl.R
+
 internal data class UserBookingUiModel(
     val id: String,
     val date: String,
@@ -8,8 +11,8 @@ internal data class UserBookingUiModel(
     val status: BookingStatusUiModel,
 )
 
-internal enum class BookingStatusUiModel(val label: String) {
-    Upcoming("Предстоит"),
-    Past("Прошло"),
-    Cancelled("Отменено"),
+internal enum class BookingStatusUiModel(@StringRes val labelRes: Int) {
+    Upcoming(R.string.my_bookings_status_upcoming),
+    Past(R.string.my_bookings_status_past),
+    Cancelled(R.string.my_bookings_status_cancelled),
 }
