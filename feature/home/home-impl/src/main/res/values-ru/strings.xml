@@ -1,0 +1,20 @@
+<resources>
+    <string name="home_retry">Повторить</string>
+    <string name="home_news_section">Новости и акции</string>
+    <string name="home_notifications">Уведомления</string>
+    <string name="home_qr_dialog_title">QR-код бронирования</string>
+    <string name="home_qr_unavailable">QR-код недоступен</string>
+    <string name="home_close">Закрыть</string>
+    <string name="home_nearest_booking">Ближайшая бронь</string>
+    <string name="home_booking_date">Дата: %s</string>
+    <string name="home_booking_time">Время: %s</string>
+    <string name="home_booking_guests">Гостей: %s</string>
+    <string name="home_qr_code">QR-код</string>
+    <string name="home_offline_banner">Нет подключения. Показаны сохранённые данные.</string>
+    <string name="home_greeting_night">Доброй ночи</string>
+    <string name="home_greeting_morning">Доброе утро</string>
+    <string name="home_greeting_afternoon">Добрый день</string>
+    <string name="home_greeting_evening">Добрый вечер</string>
+
+    <string name="error_unknown">Неизвестная ошибка</string>
+</resources>

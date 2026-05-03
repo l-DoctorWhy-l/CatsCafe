@@ -43,19 +43,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import ru.kvartalovea.catscafe.feature.booking.impl.R
 import ru.kvartalovea.catscafe.feature.booking.impl.presentation.model.BookingUiEvent
 import ru.kvartalovea.catscafe.feature.booking.impl.presentation.model.BookingUiState
 import ru.kvartalovea.catscafe.feature.booking.impl.presentation.model.CalendarDayUiModel
 import ru.kvartalovea.catscafe.feature.booking.impl.presentation.model.TimeSlotUiModel
 import ru.kvartalovea.catscafe.feature.booking.impl.presentation.viewmodel.BookingViewModel
 
-private val WEEK_DAYS = listOf("Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс")
+@Composable
+private fun weekDayLabels(): List<String> = listOf(
+    stringResource(R.string.booking_day_mon),
+    stringResource(R.string.booking_day_tue),
+    stringResource(R.string.booking_day_wed),
+    stringResource(R.string.booking_day_thu),
+    stringResource(R.string.booking_day_fri),
+    stringResource(R.string.booking_day_sat),
+    stringResource(R.string.booking_day_sun),
+)
 
 @Composable
 internal fun BookingScreen(
@@ -77,7 +88,7 @@ private fun BookingContent(
             TopAppBar(
                 title = {
                     Text(
-                        text = "Бронирование визита",
+                        text = stringResource(R.string.booking_title),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
@@ -179,7 +190,7 @@ private fun CalendarCard(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowBackIos,
-                        contentDescription = "Предыдущий месяц",
+                        contentDescription = stringResource(R.string.booking_prev_month),
                         modifier = Modifier.size(16.dp),
                         tint = if (isPrevEnabled) {
                             MaterialTheme.colorScheme.onSurface
@@ -196,7 +207,7 @@ private fun CalendarCard(
                 IconButton(onClick = onNextClick) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Outlined.ArrowForwardIos,
-                        contentDescription = "Следующий месяц",
+                        contentDescription = stringResource(R.string.booking_next_month),
                         modifier = Modifier.size(16.dp),
                     )
                 }
@@ -206,7 +217,7 @@ private fun CalendarCard(
 
             // Week day labels
             Row(modifier = Modifier.fillMaxWidth()) {
-                WEEK_DAYS.forEach { label ->
+                weekDayLabels().forEach { label ->
                     Text(
                         text = label,
                         modifier = Modifier.weight(1f),
@@ -290,7 +301,7 @@ private fun TimeSelectionSection(
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text = "Выберите время",
+            text = stringResource(R.string.booking_select_time),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
         )
@@ -373,7 +384,7 @@ private fun GuestsSection(
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
         Text(
-            text = "Количество гостей",
+            text = stringResource(R.string.booking_guests_count),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
         )
@@ -452,7 +463,7 @@ private fun ConfirmButton(enabled: Boolean, onClick: () -> Unit) {
             ),
         ) {
             Text(
-                text = "Подтвердить бронь",
+                text = stringResource(R.string.booking_confirm),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Medium,
             )
@@ -476,13 +487,13 @@ private fun SuccessState() {
             tint = MaterialTheme.colorScheme.primary,
         )
         Text(
-            text = "Бронь подтверждена!",
+            text = stringResource(R.string.booking_confirmed_title),
             style = MaterialTheme.typography.headlineSmall,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
         )
         Text(
-            text = "Детали брони появятся в разделе «Мои бронирования»",
+            text = stringResource(R.string.booking_confirmed_details),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,

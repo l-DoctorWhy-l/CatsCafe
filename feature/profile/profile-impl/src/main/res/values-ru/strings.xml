@@ -1,0 +1,9 @@
+<resources>
+    <string name="profile_sign_in_prompt">Войдите в аккаунт</string>
+    <string name="profile_loyalty_points">Баллы лояльности</string>
+    <string name="profile_spend_points">Как потратить баллы?</string>
+    <string name="profile_my_bookings">Мои бронирования</string>
+    <string name="profile_donations_history">История пожертвований</string>
+    <string name="profile_notification_settings">Настройки уведомлений</string>
+    <string name="profile_logout">Выйти из аккаунта</string>
+</resources>

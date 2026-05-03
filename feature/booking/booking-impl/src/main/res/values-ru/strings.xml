@@ -1,0 +1,17 @@
+<resources>
+    <string name="booking_title">Бронирование визита</string>
+    <string name="booking_prev_month">Предыдущий месяц</string>
+    <string name="booking_next_month">Следующий месяц</string>
+    <string name="booking_select_time">Выберите время</string>
+    <string name="booking_guests_count">Количество гостей</string>
+    <string name="booking_confirm">Подтвердить бронь</string>
+    <string name="booking_confirmed_title">Бронь подтверждена!</string>
+    <string name="booking_confirmed_details">Детали брони появятся в разделе «Мои бронирования»</string>
+    <string name="booking_day_mon">Пн</string>
+    <string name="booking_day_tue">Вт</string>
+    <string name="booking_day_wed">Ср</string>
+    <string name="booking_day_thu">Чт</string>
+    <string name="booking_day_fri">Пт</string>
+    <string name="booking_day_sat">Сб</string>
+    <string name="booking_day_sun">Вс</string>
+</resources>

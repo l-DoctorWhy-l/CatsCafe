@@ -1,0 +1,14 @@
+<resources>
+    <string name="catalog_title">Наши котики</string>
+    <string name="catalog_retry">Повторить</string>
+    <string name="catalog_empty">Ничего не найдено</string>
+    <string name="catalog_search_placeholder">Поиск по имени…</string>
+    <string name="catalog_search">Поиск</string>
+    <string name="cat_badge_new">Новый</string>
+    <string name="cat_badge_looking_for_home">Ищет дом</string>
+    <string name="cat_filter_all">Все</string>
+    <string name="cat_filter_looking_for_home">Ищут дом</string>
+    <string name="cat_filter_new">Новенькие</string>
+
+    <string name="error_unknown">Неизвестная ошибка</string>
+</resources>

@@ -4,5 +4,6 @@ internal sealed interface HomeUiEvent {
     data object Refresh : HomeUiEvent
     data class OnNewsClick(val newsId: String) : HomeUiEvent
     data object OnBookingClick : HomeUiEvent
+    data object OnQrDialogDismiss : HomeUiEvent
     data object OnNotificationsClick : HomeUiEvent
 }

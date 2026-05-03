@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import ru.kvartalovea.catscafe.core.navigation.api.AppNavigator
+import ru.kvartalovea.catscafe.common.utils.UiText
+import ru.kvartalovea.catscafe.feature.donations.impl.R
 import ru.kvartalovea.catscafe.feature.donations.impl.domain.usecase.GetDonationsUseCase
 import ru.kvartalovea.catscafe.feature.donations.impl.presentation.model.DonationsUiEvent
 import ru.kvartalovea.catscafe.feature.donations.impl.presentation.model.DonationsUiState
@@ -40,7 +42,8 @@ internal class DonationsViewModel(
                 }
                 .onFailure { error ->
                     _state.value = DonationsUiState.Error(
-                        error.message ?: "Неизвестная ошибка",
+                        error.message?.let { UiText.DynamicString(it) }
+                            ?: UiText.StringRes(R.string.error_unknown),
                     )
                 }
         }

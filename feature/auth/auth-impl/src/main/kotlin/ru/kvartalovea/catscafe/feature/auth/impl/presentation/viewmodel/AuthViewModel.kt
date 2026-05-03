@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import ru.kvartalovea.catscafe.common.utils.UiText
+import ru.kvartalovea.catscafe.feature.auth.impl.R
 import ru.kvartalovea.catscafe.feature.auth.impl.domain.usecase.LoginUseCase
 import ru.kvartalovea.catscafe.feature.auth.impl.domain.usecase.RegisterUseCase
 import ru.kvartalovea.catscafe.feature.auth.impl.presentation.model.AuthUiEvent
@@ -49,7 +51,9 @@ internal class AuthViewModel(
     private fun submitLogin() {
         val s = _state.value as? AuthUiState.Login ?: return
         val emailError = validateEmail(s.email)
-        val passwordError = if (s.password.isBlank()) "Введите пароль" else null
+        val passwordError = if (s.password.isBlank()) {
+            UiText.StringRes(R.string.error_field_required_password)
+        } else null
         if (emailError != null || passwordError != null) {
             _state.value = s.copy(emailError = emailError, passwordError = passwordError)
             return
@@ -64,10 +68,12 @@ internal class AuthViewModel(
 
     private fun submitRegister() {
         val s = _state.value as? AuthUiState.Register ?: return
-        val nameError = if (s.name.isBlank()) "Введите имя" else null
+        val nameError = if (s.name.isBlank()) UiText.StringRes(R.string.error_field_required_name) else null
         val emailError = validateEmail(s.email)
         val passwordError = validatePassword(s.password)
-        val confirmError = if (s.confirmPassword != s.password) "Пароли не совпадают" else null
+        val confirmError = if (s.confirmPassword != s.password) {
+            UiText.StringRes(R.string.error_passwords_mismatch)
+        } else null
         if (nameError != null || emailError != null || passwordError != null || confirmError != null) {
             _state.value = s.copy(
                 nameError = nameError,
@@ -93,15 +99,15 @@ internal class AuthViewModel(
         (_state.value as? AuthUiState.Register)?.let { _state.value = it.transform() }
     }
 
-    private fun validateEmail(email: String): String? = when {
-        email.isBlank() -> "Введите email"
-        !email.contains('@') -> "Неверный формат email"
+    private fun validateEmail(email: String): UiText? = when {
+        email.isBlank() -> UiText.StringRes(R.string.error_field_required_email)
+        !email.contains('@') -> UiText.StringRes(R.string.error_email_invalid_format)
         else -> null
     }
 
-    private fun validatePassword(password: String): String? = when {
-        password.isBlank() -> "Введите пароль"
-        password.length < 6 -> "Минимум 6 символов"
+    private fun validatePassword(password: String): UiText? = when {
+        password.isBlank() -> UiText.StringRes(R.string.error_field_required_password)
+        password.length < 6 -> UiText.StringRes(R.string.error_password_too_short)
         else -> null
     }
 }

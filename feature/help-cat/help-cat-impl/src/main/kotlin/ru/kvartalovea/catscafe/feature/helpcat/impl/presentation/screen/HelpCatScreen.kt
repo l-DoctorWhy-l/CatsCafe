@@ -35,12 +35,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import ru.kvartalovea.catscafe.common.ui.asString
+import ru.kvartalovea.catscafe.feature.helpcat.impl.R
 import ru.kvartalovea.catscafe.feature.helpcat.impl.presentation.model.HelpCatUiEvent
 import ru.kvartalovea.catscafe.feature.helpcat.impl.presentation.model.HelpCatUiState
 import ru.kvartalovea.catscafe.feature.helpcat.impl.presentation.viewmodel.HelpCatViewModel
@@ -71,12 +74,12 @@ private fun HelpCatContent(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Помочь котику") },
+                title = { Text(stringResource(R.string.help_cat_title)) },
                 navigationIcon = {
                     IconButton(onClick = { onEvent(HelpCatUiEvent.OnBackClick) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Назад",
+                            contentDescription = stringResource(R.string.help_cat_back),
                         )
                     }
                 },
@@ -98,7 +101,7 @@ private fun HelpCatContent(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Сумма пожертвования",
+                text = stringResource(R.string.help_cat_donation_amount),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
             )
@@ -108,9 +111,9 @@ private fun HelpCatContent(
                 value = state.amount,
                 onValueChange = { onEvent(HelpCatUiEvent.OnAmountChanged(it)) },
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text("Сумма") },
-                prefix = { Text("₽") },
-                placeholder = { Text("Например, 500") },
+                label = { Text(stringResource(R.string.help_cat_amount_label)) },
+                prefix = { Text(stringResource(R.string.help_cat_amount_prefix)) },
+                placeholder = { Text(stringResource(R.string.help_cat_amount_placeholder)) },
                 isError = state.amountError != null,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -122,7 +125,7 @@ private fun HelpCatContent(
             )
             if (state.amountError != null) {
                 Text(
-                    text = state.amountError,
+                    text = state.amountError.asString(),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.error,
                     modifier = Modifier.padding(start = 4.dp, top = 2.dp),
@@ -150,7 +153,7 @@ private fun HelpCatContent(
                     )
                 } else {
                     Text(
-                        text = "Пожертвовать",
+                        text = stringResource(R.string.help_cat_donate_button),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Medium,
                     )
@@ -191,7 +194,7 @@ private fun CatNameCard(catName: String) {
                 color = MaterialTheme.colorScheme.onPrimaryContainer,
             )
             Text(
-                text = "Ваше пожертвование поможет позаботиться о котике",
+                text = stringResource(R.string.help_cat_description),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f),
                 textAlign = TextAlign.Center,
@@ -215,13 +218,13 @@ private fun DonationSuccessContent() {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Спасибо!",
+            text = stringResource(R.string.help_cat_success_title),
             style = MaterialTheme.typography.headlineMedium,
             fontWeight = FontWeight.Bold,
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Ваше пожертвование засчитано",
+            text = stringResource(R.string.help_cat_success_subtitle),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
@@ -231,7 +234,7 @@ private fun DonationSuccessContent() {
 @Composable
 private fun LegalText() {
     Text(
-        text = "Данный функционал является демонстрационным, никакие транзакции приложение не производит.",
+        text = stringResource(R.string.help_cat_legal),
         style = MaterialTheme.typography.labelSmall,
         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
         textAlign = TextAlign.Center,

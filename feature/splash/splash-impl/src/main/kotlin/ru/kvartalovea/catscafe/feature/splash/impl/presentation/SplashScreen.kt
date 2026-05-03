@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import kotlinx.coroutines.delay
+import ru.kvartalovea.catscafe.feature.splash.impl.R
 
 private const val SPLASH_DURATION_MS = 1600L
 
@@ -56,7 +58,7 @@ internal fun SplashScreen(onSplashComplete: () -> Unit) {
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = "КотоКафе",
+                text = stringResource(R.string.splash_app_name),
                 style = MaterialTheme.typography.displayMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimary,

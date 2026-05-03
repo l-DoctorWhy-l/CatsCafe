@@ -1,0 +1,19 @@
+<resources>
+    <string name="my_bookings_title">Мои бронирования</string>
+    <string name="my_bookings_back">Назад</string>
+    <string name="my_bookings_retry">Повторить</string>
+    <string name="my_bookings_empty_title">Нет бронирований</string>
+    <string name="my_bookings_empty_subtitle">Ваши бронирования появятся здесь</string>
+    <string name="my_bookings_status_upcoming">Предстоит</string>
+    <string name="my_bookings_status_past">Прошло</string>
+    <string name="my_bookings_status_cancelled">Отменено</string>
+
+    <plurals name="my_bookings_guests">
+        <item quantity="one">гость</item>
+        <item quantity="few">гостя</item>
+        <item quantity="many">гостей</item>
+        <item quantity="other">гостей</item>
+    </plurals>
+
+    <string name="error_unknown">Неизвестная ошибка</string>
+</resources>

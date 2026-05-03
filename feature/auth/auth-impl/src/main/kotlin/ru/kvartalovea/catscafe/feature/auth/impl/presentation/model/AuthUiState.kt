@@ -1,5 +1,7 @@
 package ru.kvartalovea.catscafe.feature.auth.impl.presentation.model
 
+import ru.kvartalovea.catscafe.common.utils.UiText
+
 internal sealed interface AuthUiState {
 
     data class Login(
@@ -7,8 +9,8 @@ internal sealed interface AuthUiState {
         val password: String = "",
         val isPasswordVisible: Boolean = false,
         val isLoading: Boolean = false,
-        val emailError: String? = null,
-        val passwordError: String? = null,
+        val emailError: UiText? = null,
+        val passwordError: UiText? = null,
     ) : AuthUiState
 
     data class Register(
@@ -18,9 +20,9 @@ internal sealed interface AuthUiState {
         val confirmPassword: String = "",
         val isPasswordVisible: Boolean = false,
         val isLoading: Boolean = false,
-        val nameError: String? = null,
-        val emailError: String? = null,
-        val passwordError: String? = null,
-        val confirmPasswordError: String? = null,
+        val nameError: UiText? = null,
+        val emailError: UiText? = null,
+        val passwordError: UiText? = null,
+        val confirmPasswordError: UiText? = null,
     ) : AuthUiState
 }

@@ -1,0 +1,9 @@
+<resources>
+    <string name="profile_sign_in_prompt">Sign in to your account</string>
+    <string name="profile_loyalty_points">Loyalty points</string>
+    <string name="profile_spend_points">How to spend points?</string>
+    <string name="profile_my_bookings">My bookings</string>
+    <string name="profile_donations_history">Donation history</string>
+    <string name="profile_notification_settings">Notification settings</string>
+    <string name="profile_logout">Sign out</string>
+</resources>

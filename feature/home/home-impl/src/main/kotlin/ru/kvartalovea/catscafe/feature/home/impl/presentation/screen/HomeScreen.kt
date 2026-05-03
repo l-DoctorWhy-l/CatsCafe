@@ -1,5 +1,6 @@
 package ru.kvartalovea.catscafe.feature.home.impl.presentation.screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudOff
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.QrCode2
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -30,6 +32,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -38,14 +41,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import io.github.alexzhirkevich.qrose.rememberQrCodePainter
 import org.koin.androidx.compose.koinViewModel
+import ru.kvartalovea.catscafe.common.ui.asString
+import ru.kvartalovea.catscafe.feature.home.impl.R
 import ru.kvartalovea.catscafe.feature.home.impl.presentation.model.HomeUiEvent
+import ru.kvartalovea.catscafe.feature.home.impl.presentation.model.HomeUiState
 import ru.kvartalovea.catscafe.feature.home.impl.presentation.model.NearestBookingUiModel
 import ru.kvartalovea.catscafe.feature.home.impl.presentation.model.NewsItemUiModel
-import ru.kvartalovea.catscafe.feature.home.impl.presentation.model.HomeUiState
 import ru.kvartalovea.catscafe.feature.home.impl.presentation.viewmodel.HomeViewModel
 import java.util.Calendar
 
@@ -100,14 +107,14 @@ private fun HomeContent(
                         verticalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
                         Text(
-                            text = state.message,
+                            text = state.message.asString(),
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodyMedium,
                         )
                         androidx.compose.material3.TextButton(
                             onClick = { onEvent(HomeUiEvent.Refresh) },
                         ) {
-                            Text(text = "Повторить")
+                            Text(text = stringResource(R.string.home_retry))
                         }
                     }
                 }
@@ -137,7 +144,7 @@ private fun HomeContent(
                     if (state.newsList.isNotEmpty()) {
                         item {
                             Text(
-                                text = "Новости и акции",
+                                text = stringResource(R.string.home_news_section),
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.SemiBold,
                                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
@@ -151,6 +158,13 @@ private fun HomeContent(
                             )
                         }
                     }
+                }
+
+                if (state.showQrDialog) {
+                    BookingQrDialog(
+                        qrCodeUrl = state.nearestBooking?.qrCodeUrl,
+                        onDismiss = { onEvent(HomeUiEvent.OnQrDialogDismiss) },
+                    )
                 }
             }
         }
@@ -176,7 +190,7 @@ private fun HomeTopBar(
             IconButton(onClick = onNotificationsClick) {
                 Icon(
                     imageVector = Icons.Outlined.Notifications,
-                    contentDescription = "Уведомления",
+                    contentDescription = stringResource(R.string.home_notifications),
                 )
             }
         },
@@ -185,6 +199,49 @@ private fun HomeTopBar(
             titleContentColor = MaterialTheme.colorScheme.onPrimary,
             actionIconContentColor = MaterialTheme.colorScheme.onPrimary,
         ),
+    )
+}
+
+@Composable
+private fun BookingQrDialog(
+    qrCodeUrl: String?,
+    onDismiss: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                text = stringResource(R.string.home_qr_dialog_title),
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.SemiBold,
+            )
+        },
+        text = {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (qrCodeUrl != null) {
+                    val painter = rememberQrCodePainter(data = qrCodeUrl)
+                    Image(
+                        painter = painter,
+                        contentDescription = stringResource(R.string.home_qr_dialog_title),
+                        modifier = Modifier.size(220.dp),
+                    )
+                } else {
+                    Text(
+                        text = stringResource(R.string.home_qr_unavailable),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(text = stringResource(R.string.home_close))
+            }
+        },
     )
 }
 
@@ -221,22 +278,22 @@ private fun NearestBookingCard(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
             ) {
                 Text(
-                    text = "Ближайшая бронь",
+                    text = stringResource(R.string.home_nearest_booking),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
-                    text = "Дата: ${booking.date}",
+                    text = stringResource(R.string.home_booking_date, booking.date),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    text = "Время: ${booking.time}",
+                    text = stringResource(R.string.home_booking_time, booking.time),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Text(
-                    text = "Гостей: ${booking.guestsCount}",
+                    text = stringResource(R.string.home_booking_guests, booking.guestsCount),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -245,14 +302,15 @@ private fun NearestBookingCard(
                 modifier = Modifier.padding(end = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
+                val qrCodeLabel = stringResource(R.string.home_qr_code)
                 Icon(
                     imageVector = Icons.Outlined.QrCode2,
-                    contentDescription = "QR-код",
+                    contentDescription = qrCodeLabel,
                     modifier = Modifier.size(56.dp),
                     tint = MaterialTheme.colorScheme.onSurface,
                 )
                 Text(
-                    text = "QR-код",
+                    text = qrCodeLabel,
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -335,20 +393,22 @@ private fun OfflineBanner() {
             tint = MaterialTheme.colorScheme.onSecondaryContainer,
         )
         Text(
-            text = "Нет подключения. Показаны сохранённые данные.",
+            text = stringResource(R.string.home_offline_banner),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
         )
     }
 }
 
+@Composable
 private fun buildGreeting(userName: String): String {
     val hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-    val timeGreeting = when {
-        hour < 6 -> "Доброй ночи"
-        hour < 12 -> "Доброе утро"
-        hour < 18 -> "Добрый день"
-        else -> "Добрый вечер"
+    val greetingRes = when {
+        hour < 6 -> R.string.home_greeting_night
+        hour < 12 -> R.string.home_greeting_morning
+        hour < 18 -> R.string.home_greeting_afternoon
+        else -> R.string.home_greeting_evening
     }
+    val timeGreeting = stringResource(greetingRes)
     return if (userName.isNotBlank()) "$timeGreeting, $userName!" else "$timeGreeting!"
 }

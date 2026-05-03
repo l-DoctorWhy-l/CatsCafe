@@ -1,0 +1,14 @@
+<resources>
+    <string name="catalog_title">Our Cats</string>
+    <string name="catalog_retry">Retry</string>
+    <string name="catalog_empty">Nothing found</string>
+    <string name="catalog_search_placeholder">Search by name…</string>
+    <string name="catalog_search">Search</string>
+    <string name="cat_badge_new">New</string>
+    <string name="cat_badge_looking_for_home">Looking for home</string>
+    <string name="cat_filter_all">All</string>
+    <string name="cat_filter_looking_for_home">Looking for home</string>
+    <string name="cat_filter_new">New</string>
+
+    <string name="error_unknown">Unknown error</string>
+</resources>

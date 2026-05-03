@@ -42,10 +42,10 @@ internal class HomeRepositoryImpl(
                 }
             }
             is ApiResult.Failure.Http -> Result.failure(
-                Exception("HTTP ${(result as ApiResult.Failure.Http).code}: ${result.message}"),
+                Exception("HTTP ${result.code}: ${result.message}"),
             )
-            is ApiResult.Failure.Serialization -> Result.failure((result as ApiResult.Failure.Serialization).cause)
-            is ApiResult.Failure.Unknown -> Result.failure((result as ApiResult.Failure.Unknown).cause)
+            is ApiResult.Failure.Serialization -> Result.failure(result.cause)
+            is ApiResult.Failure.Unknown -> Result.failure(result.cause)
         }
     }
 

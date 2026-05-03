@@ -1,0 +1,9 @@
+<resources>
+    <string name="donations_title">Donation History</string>
+    <string name="donations_back">Back</string>
+    <string name="donations_retry">Retry</string>
+    <string name="donations_empty_title">History is empty</string>
+    <string name="donations_empty_subtitle">You haven\'t made any donations yet</string>
+
+    <string name="error_unknown">Unknown error</string>
+</resources>

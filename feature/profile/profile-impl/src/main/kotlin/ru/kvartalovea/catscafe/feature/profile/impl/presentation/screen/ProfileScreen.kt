@@ -42,10 +42,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.koin.androidx.compose.koinViewModel
+import ru.kvartalovea.catscafe.feature.profile.impl.R
 import ru.kvartalovea.catscafe.feature.profile.impl.presentation.model.ProfileUiEvent
 import ru.kvartalovea.catscafe.feature.profile.impl.presentation.model.ProfileUiState
 import ru.kvartalovea.catscafe.feature.profile.impl.presentation.viewmodel.ProfileViewModel
@@ -97,7 +99,7 @@ private fun ProfileContent(
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
-                            text = "Войдите в аккаунт",
+                            text = stringResource(R.string.profile_sign_in_prompt),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -170,7 +172,7 @@ private fun LoyaltyCard(
             ) {
                 Column {
                     Text(
-                        text = "Баллы лояльности",
+                        text = stringResource(R.string.profile_loyalty_points),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.85f),
                     )
@@ -199,7 +201,7 @@ private fun LoyaltyCard(
                 shape = RoundedCornerShape(10.dp),
             ) {
                 Text(
-                    text = "Как потратить баллы?",
+                    text = stringResource(R.string.profile_spend_points),
                     fontWeight = FontWeight.Medium,
                 )
             }
@@ -218,7 +220,7 @@ private fun MenuCard(onEvent: (ProfileUiEvent) -> Unit) {
         Column {
             ProfileMenuItem(
                 icon = Icons.Outlined.CalendarMonth,
-                label = "Мои бронирования",
+                label = stringResource(R.string.profile_my_bookings),
                 onClick = { onEvent(ProfileUiEvent.OnMyBookingsClick) },
             )
             Divider(
@@ -227,7 +229,7 @@ private fun MenuCard(onEvent: (ProfileUiEvent) -> Unit) {
             )
             ProfileMenuItem(
                 icon = Icons.Outlined.FavoriteBorder,
-                label = "История пожертвований",
+                label = stringResource(R.string.profile_donations_history),
                 onClick = { onEvent(ProfileUiEvent.OnDonationsHistoryClick) },
             )
             Divider(
@@ -236,7 +238,7 @@ private fun MenuCard(onEvent: (ProfileUiEvent) -> Unit) {
             )
             ProfileMenuItem(
                 icon = Icons.Outlined.NotificationsNone,
-                label = "Настройки уведомлений",
+                label = stringResource(R.string.profile_notification_settings),
                 onClick = { onEvent(ProfileUiEvent.OnNotificationSettingsClick) },
             )
         }
@@ -300,7 +302,7 @@ private fun LogoutCard(onLogout: () -> Unit) {
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "Выйти из аккаунта",
+                text = stringResource(R.string.profile_logout),
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium,
